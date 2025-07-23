@@ -1,71 +1,85 @@
-# 🧬 Mock Epithelium Analysis with RNA Velocity
+# 🧬 Single-Cell RNA Velocity Analysis of Mock Epithelium
 
-This notebook presents a comprehensive single-cell RNA-seq analysis pipeline for epithelial cells, integrating **Scanpy**, **scVelo**, **CellRank**, and **Velorama** to explore gene expression dynamics and lineage trajectories in mock epithelial tissue.
+A comprehensive single-cell RNA sequencing analysis pipeline for studying epithelial cell dynamics using RNA velocity and lineage inference methods.
+
+## 📖 Overview
+
+This repository contains a complete pipeline for analyzing single-cell RNA-seq data from mock epithelial tissue, focusing on:
+
+- **Cell type identification** and annotation using marker genes
+- **RNA velocity analysis** to infer cellular dynamics and future states
+- **Lineage inference** to map developmental trajectories
+- **Driver gene identification** for each cell type
+
+The analysis integrates multiple state-of-the-art tools including Scanpy, scVelo, and CellRank to provide comprehensive insights into epithelial cell biology.
+
+## 🛠️ Pipeline Features
+
+### Core Analysis
+- ✅ **Quality Control**: Cell/gene filtering, mitochondrial content analysis
+- ✅ **Preprocessing**: Normalization, HVG selection, dimensionality reduction
+- ✅ **Clustering**: Leiden algorithm with PAGA graph abstraction
+- ✅ **Cell Annotation**: Marker-based identification of epithelial cell types
+- ✅ **RNA Velocity**: Dynamical modeling of transcriptional dynamics
+- ✅ **Lineage Inference**: Initial/terminal state prediction and fate mapping
+
+### Cell Types Identified
+- 🔬 **Stem Cells**: Lgr5⁺, Smoc2⁺, Axin2⁺
+- 🔄 **TA Cells**: Hmgn2⁺, Ccna2⁺, Mcm5⁺ (Transit-Amplifying)
+- 🧱 **Enterocytes**: Cdhr2⁺, Fabp2⁺, Aqp8⁺
+- 🫧 **Goblet Cells**: Muc2⁺, Zg16⁺, Atoh1⁺
+- ⚡ **EEC Cells**: Insm1⁺, Pax6⁺ (Enteroendocrine)
+
+
+## 🚀 Quick Start
+
+### Prerequisites
+- Python 3.9+
+- Conda or Mamba (recommended)
+- 8GB+ RAM recommended
+
+
+
+## 📊 Key Outputs
+
+### Visualizations
+- 🎯 Quality control metrics and filtering plots
+- 🗺️ UMAP embeddings colored by cell types and marker genes
+- ➡️ RNA velocity vector fields and stream plots
+- ⏰ Latent time progression maps
+- 🎲 Fate probability heatmaps
+
+### Data Files
+- `adata.h5ad`: Complete processed AnnData object
+- `potenial_driver.csv`: Top 100 likelihood genes per cell type
+- `cluster_differential_velocity.csv`: Velocity-correlated genes
+
+## 🔬 Methodology
+
+### Data Processing
+1. **Quality Control**: Filter cells (<200 genes) and genes (<3 cells)
+2. **Normalization**: Library size normalization + log transformation
+3. **Feature Selection**: Highly variable genes (4,515 genes selected)
+4. **Batch Correction**: Total count regression
+
+### RNA Velocity Analysis
+- **Model**: scVelo dynamical model for full transcriptional dynamics
+- **Integration**: Merge spliced/unspliced count matrices
+- **Inference**: Velocity vectors and latent time computation
+
+### Lineage Analysis
+- **Terminal States**: EC2, EEc, GC (CellRank identification)
+- **Initial States**: Stem cells
+- **Fate Mapping**: Transition probabilities for each cell
+
+
+## 📚 References
+
+- **scVelo**: Bergen, V. et al. Generalizing RNA velocity to transient cell states through dynamical modeling. *Nature Biotechnology* 38, 1408–1414 (2020).
+- **CellRank**: Lange, M. et al. CellRank for directed single-cell fate mapping. *Nature Methods* 19, 159–170 (2022).
+- **Scanpy**: Wolf, F.A. et al. SCANPY: large-scale single-cell gene expression data analysis. *Genome Biology* 19, 15 (2018).
+
 
 ---
 
-## 📌 Overview
-
-The pipeline performs:
-
-- **Preprocessing & QC**: Cell/gene filtering, normalization, and mitochondrial content analysis.
-- **Dimensionality Reduction & Clustering**: PCA, UMAP, Leiden clustering, PAGA graph abstraction.
-- **Cell Type Annotation**: Marker-based annotation for stem, TA, enterocyte, goblet, and EEC cells.
-- **RNA Velocity Estimation**: Using the dynamical model in `scVelo` to infer future cell states.
-- **Lineage Inference**: Leveraging `CellRank` for initial/terminal state prediction and fate probabilities.
-- **Driver Gene Identification**: Ranking genes via transcriptional likelihood and velocity correlation.
-- **Velorama (WIP)**: Attempted integration to model regulatory gene influences across dynamic lineages.
-
----
-
-## 🧪 Key Tools & Libraries
-
-- [`scanpy`](https://scanpy.readthedocs.io)
-- [`anndata`](https://anndata.readthedocs.io)
-- [`scvelo`](https://scvelo.readthedocs.io)
-- [`cellrank`](https://cellrank.org)
-- [`episcanpy`](https://github.com/colomemaria/episcanpy)
-- [`velorama`](https://github.com/berenslab/velorama) *(experimental)*
-
----
-
-## 📂 Dataset
-
-- **Input**: 10x Genomics-style filtered matrix (`matrix.mtx`, `features.tsv`, `barcodes.tsv`)
-- **Additional**: Loom file containing unspliced/spliced matrices for RNA velocity
-- **Outputs**: Processed data saved as `adata.h5ad` and `Mock.h5ad`
-
----
-
-## 🔁 Workflow
-
-1. **Load and preprocess matrix with Scanpy**
-2. **Filter cells/genes and normalize**
-3. **Identify HVGs, regress out technical factors**
-4. **Embed with PCA & UMAP, cluster with Leiden**
-5. **Visualize and annotate clusters using known markers**
-6. **Integrate with RNA velocity loom file**
-7. **Compute velocities and latent time with `scVelo`**
-8. **Use `CellRank` to infer fates and map lineage transitions**
-9. **Rank potential driver genes for each annotated type**
-10. **(Optional)** Test Velorama for gene regulatory inference
-
----
-
-## 📈 Outputs
-
-- Clustered UMAPs annotated by marker genes and cell types
-- RNA velocity vector fields and stream plots
-- Latent time plots and fate maps
-- Ranked driver genes saved as `.csv` files
-- Preprocessed `.h5ad` files for reproducibility
-
----
-
-## 🚧 Notes
-
-- The notebook was originally run in **Google Colab** and assumes mounting of Google Drive for file access.
-- `Velorama` integration is exploratory and requires proper CLI argument setup.
-
----
-
+⭐ **Star this repository if you found it helpful!**
