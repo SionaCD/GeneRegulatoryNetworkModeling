@@ -39,6 +39,10 @@ The analysis integrates multiple state-of-the-art tools including Scanpy, scVelo
 - 8GB+ RAM recommended
 
 
+### Run in Google Colab
+📓 **[Open in Google Colab](https://colab.research.google.com/drive/1PAzsg8FP403Sk-Pm3cYIXrDCsTu3-WU3?usp=sharing)**
+
+
 
 ## 📊 Key Outputs
 
